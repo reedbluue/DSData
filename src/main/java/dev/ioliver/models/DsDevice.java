@@ -138,7 +138,7 @@ public class DsDevice {
           System.out.println(e.getMessage());
         }
       }
-    }, 0, 2, TimeUnit.MILLISECONDS);
+    }, 0, 5, TimeUnit.MILLISECONDS);
   }
 
   /**
