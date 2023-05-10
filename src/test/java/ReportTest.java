@@ -1,18 +1,9 @@
-import dev.ioliver.models.Report.OutputReport;
 import dev.ioliver.models.Report.OutputReportFCR;
 import dev.ioliver.models.Report.Report;
 
 import java.util.Arrays;
 
-/**
- * The type Report test.
- */
 public class ReportTest {
-  /**
-   * The entry point of application.
-   *
-   * @param args the input arguments
-   */
   public static void main(String[] args) {
     OutputReportFCR output = new OutputReportFCR();
     output.setLed(255, 10, 100);
