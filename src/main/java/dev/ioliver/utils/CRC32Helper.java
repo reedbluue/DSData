@@ -2,7 +2,18 @@ package dev.ioliver.utils;
 
 import java.util.zip.CRC32;
 
+/**
+ * The type Crc 32 helper.
+ *
+ * @author Igor Oliveira
+ */
 public abstract class CRC32Helper {
+  /**
+   * Gen crc value long.
+   *
+   * @param buffer the buffer
+   * @return the long
+   */
   public static long genCRCValue(byte[] buffer) {
     if(buffer.length < 5)
       throw new IllegalArgumentException("The length of the buffer must to be bigger of 4.");
@@ -12,6 +23,12 @@ public abstract class CRC32Helper {
     return crc32.getValue();
   }
 
+  /**
+   * Gen crc bytes byte [ ].
+   *
+   * @param buffer the buffer
+   * @return the byte [ ]
+   */
   public static byte[] genCRCBytes(byte[] buffer) {
     long crc32Value = genCRCValue(buffer);
 
@@ -25,6 +42,12 @@ public abstract class CRC32Helper {
     return completeBuffer;
   }
 
+  /**
+   * Gen buffer byte [ ].
+   *
+   * @param buffer the buffer
+   * @return the byte [ ]
+   */
   public static byte[] genBuffer(byte[] buffer) {
     byte[] crcBytes = genCRCBytes(buffer);
     byte[] completeBuffer = new byte[buffer.length + 4];

@@ -7,11 +7,31 @@ import dev.ioliver.utils.CRC32Helper;
 
 import java.util.Arrays;
 
+/**
+ * The type Report.
+ *
+ * @author Igor Oliveira
+ */
 public class Report {
+  /**
+   * The Header of report.
+   */
   protected ReportPacketPayloadHeader header;
+  /**
+   * The Protocol of report.
+   */
   protected byte protocol;
+  /**
+   * The Data of report.
+   */
   protected byte[] data;
 
+  /**
+   * Instantiates a new Report.
+   *
+   * @param protocol the protocol
+   * @param dataSize the data size
+   */
   public Report(byte protocol, int dataSize) {
     header = new ReportPacketPayloadHeader(ReportType.INPUT, ReportParametersType.PARAM_0X00, ReportTransactionType.DATA);
     this.protocol = protocol;
@@ -19,6 +39,11 @@ public class Report {
     Arrays.fill(this.data, (byte) 0x00);
   }
 
+  /**
+   * Instantiates a new Report.
+   *
+   * @param buffer the buffer of data read from device
+   */
   public Report(byte[] buffer) {
     header = new ReportPacketPayloadHeader(buffer[0]);
     this.protocol = buffer[1];
@@ -26,26 +51,56 @@ public class Report {
     System.arraycopy(buffer, 2, this.data, 0, buffer.length - 2);
   }
 
+  /**
+   * Get data byte [ ].
+   *
+   * @return the byte [ ]
+   */
   public byte[] getData() {
     return data;
   }
 
+  /**
+   * Gets protocol.
+   *
+   * @return the protocol
+   */
   public byte getProtocol() {
     return protocol;
   }
 
+  /**
+   * Gets header.
+   *
+   * @return the header
+   */
   public ReportPacketPayloadHeader getHeader() {
     return this.header;
   }
 
+  /**
+   * Gets data integrity check value.
+   *
+   * @return the data integrity check value
+   */
   public long getDataIntegrityCheckValue() {
     return CRC32Helper.genCRCValue(getConcatedReport());
   }
 
+  /**
+   * Get data integrity check byte [ ].
+   *
+   * @return the byte [ ]
+   */
   public byte[] getDataIntegrityCheck() {
     return CRC32Helper.genCRCBytes(getConcatedReport());
   }
 
+  /**
+   * Get concated report byte [ ].
+   *
+   * @return the byte [ ]
+   */
   public byte[] getConcatedReport() {
     byte[] concatedReport = new byte[data.length + 2];
 
@@ -56,6 +111,9 @@ public class Report {
     return concatedReport;
   }
 
+  /**
+   * Reset data. Fill data with 0x00.
+   */
   public void resetData() {
     Arrays.fill(this.data, (byte) 0x00);
   }

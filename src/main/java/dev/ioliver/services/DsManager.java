@@ -8,16 +8,32 @@ import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
+/**
+ * The type Ds manager.
+ *
+ * @author Igor Oliveira
+ */
 public class DsManager {
   private final DsService service = new DsService();
-  public ArrayList<DsDevice> connectedDevices = new ArrayList<>();
+  private final ArrayList<DsDevice> connectedDevices = new ArrayList<>();
 
+  /**
+   * Instantiates a new Ds manager.
+   */
   public DsManager() {
     Executors.newScheduledThreadPool(1).scheduleAtFixedRate(() -> {
       try {
         List<HidDevice> devices = service.getDevices();
-        for(HidDevice d : devices) {
-          if(!checkIfDeviceExists(d)) {
+        connectedDevices.removeIf(cd -> {
+          if (devices.stream().noneMatch(d -> d.getSerialNumber().equals(cd.getMac()))) {
+            cd.stopKeepAlive();
+            System.out.println("Device: " + cd + " de-instantiated!");
+            return true;
+          }
+          return false;
+        });
+        for (HidDevice d : devices) {
+          if (connectedDevices.stream().noneMatch(cd -> cd.getMac().equals(d.getSerialNumber()))) {
             DsDevice dsDevice = new DsDevice(d);
             connectedDevices.add(dsDevice);
           }
@@ -25,15 +41,15 @@ public class DsManager {
       } catch (RuntimeException e) {
         System.out.println(e.getMessage());
       }
-    }, 1000, 5000, TimeUnit.MILLISECONDS);
+    }, 1000, 3000, TimeUnit.MILLISECONDS);
   }
 
-  private boolean checkIfDeviceExists(HidDevice hid) {
-    String mac = hid.getSerialNumber();
-    for(DsDevice d : connectedDevices) {
-      if(d.getMac().equals(mac))
-        return true;
-    }
-    return false;
+  /**
+   * Gets connected devices.
+   *
+   * @return The connected devices
+   */
+  public ArrayList<DsDevice> getConnectedDevices() {
+    return connectedDevices;
   }
 }
