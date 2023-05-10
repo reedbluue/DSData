@@ -14,13 +14,14 @@ import java.util.concurrent.TimeUnit;
  * @author Igor Oliveira
  */
 public class DsManager {
+  private static DsManager instance = null;
   private final DsService service = new DsService();
   private final ArrayList<DsDevice> connectedDevices = new ArrayList<>();
 
   /**
    * Instantiates a new Ds manager.
    */
-  public DsManager() {
+  private DsManager() {
     Executors.newScheduledThreadPool(1).scheduleAtFixedRate(() -> {
       try {
         List<HidDevice> devices = service.getDevices();
@@ -42,6 +43,13 @@ public class DsManager {
         System.out.println(e.getMessage());
       }
     }, 1000, 3000, TimeUnit.MILLISECONDS);
+  }
+
+  public static DsManager getInstance() {
+    if (instance == null) {
+      instance = new DsManager();
+    }
+    return instance;
   }
 
   /**
