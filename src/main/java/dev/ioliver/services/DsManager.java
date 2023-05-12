@@ -26,7 +26,7 @@ public class DsManager {
       try {
         List<HidDevice> devices = service.getDevices();
         connectedDevices.removeIf(cd -> {
-          if (devices.stream().noneMatch(d -> d.getSerialNumber().equals(cd.getMac()))) {
+          if (devices.stream().noneMatch(d -> d.getSerialNumber().equalsIgnoreCase(cd.getMac()))) {
             cd.stopKeepAlive();
             System.out.println("Device: " + cd + " de-instantiated!");
             return true;
@@ -34,7 +34,7 @@ public class DsManager {
           return false;
         });
         for (HidDevice d : devices) {
-          if (connectedDevices.stream().noneMatch(cd -> cd.getMac().equals(d.getSerialNumber()))) {
+          if (connectedDevices.stream().noneMatch(cd -> cd.getMac().equalsIgnoreCase(d.getSerialNumber()))) {
             DsDevice dsDevice = new DsDevice(d);
             connectedDevices.add(dsDevice);
           }

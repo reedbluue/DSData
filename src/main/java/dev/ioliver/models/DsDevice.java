@@ -42,7 +42,7 @@ public class DsDevice {
     path = hid.getPath();
     pid = hid.getProductId();
     vid = hid.getVendorId();
-    mac = hid.getSerialNumber();
+    mac = hid.getSerialNumber().toUpperCase();
     serial = hid.getSerialNumber();
 
     System.out.println("Device " + this + " !");
@@ -52,7 +52,7 @@ public class DsDevice {
 
   @Override
   public String toString() {
-    return "[ " + name + ", " + mac.toUpperCase() + " instantiated!]";
+    return "[ " + name + ", " + mac + " instantiated!]";
   }
 
   /**

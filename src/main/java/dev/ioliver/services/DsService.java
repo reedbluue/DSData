@@ -24,18 +24,18 @@ public class DsService {
     @Override
     public void hidDeviceAttached(HidServicesEvent hidServicesEvent) {
       if (hidServicesEvent.getHidDevice().getProduct().equals(DEVICE_NAME))
-        System.out.println(hidServicesEvent.getHidDevice().getProduct() + " [" + hidServicesEvent.getHidDevice().getSerialNumber() + "] " + "success on pair!");
+        System.out.println(hidServicesEvent.getHidDevice().getProduct() + " [" + hidServicesEvent.getHidDevice().getSerialNumber().toUpperCase() + "] " + "success on pair!");
     }
 
     @Override
     public void hidDeviceDetached(HidServicesEvent hidServicesEvent) {
       if (hidServicesEvent.getHidDevice().getProduct().equals(DEVICE_NAME))
-        System.out.println(hidServicesEvent.getHidDevice().getProduct() + " [" + hidServicesEvent.getHidDevice().getSerialNumber() + "] " + "success on dispair!");
+        System.out.println(hidServicesEvent.getHidDevice().getProduct() + " [" + hidServicesEvent.getHidDevice().getSerialNumber().toUpperCase() + "] " + "success on dispair!");
     }
 
     @Override
     public void hidFailure(HidServicesEvent hidServicesEvent) {
-      System.out.println(hidServicesEvent.getHidDevice().getProduct() + " [" + hidServicesEvent.getHidDevice().getSerialNumber() + "], " + "connection fault!");
+      System.out.println(hidServicesEvent.getHidDevice().getProduct() + " [" + hidServicesEvent.getHidDevice().getSerialNumber().toUpperCase() + "], " + "connection fault!");
     }
   };
 
