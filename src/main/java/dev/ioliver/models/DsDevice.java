@@ -45,14 +45,14 @@ public class DsDevice {
     mac = hid.getSerialNumber().toUpperCase();
     serial = hid.getSerialNumber();
 
-    System.out.println("Device " + this + " !");
+    System.out.println("Device " + this + " instanced !");
 
     keepAlive();
   }
 
   @Override
   public String toString() {
-    return "[ " + name + ", " + mac + " instantiated!]";
+    return "[ " + name + ", " + mac + " ]";
   }
 
   /**
@@ -62,6 +62,15 @@ public class DsDevice {
    */
   public String getName() {
     return name;
+  }
+
+  /**
+   * Is connected boolean.
+   *
+   * @return the boolean
+   */
+  public boolean isConnected() {
+    return hid.isOpen();
   }
 
   /**

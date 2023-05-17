@@ -42,9 +42,14 @@ public class DsManager {
       } catch (RuntimeException e) {
         System.out.println(e.getMessage());
       }
-    }, 1000, 3000, TimeUnit.MILLISECONDS);
+    }, 0, 3000, TimeUnit.MILLISECONDS);
   }
 
+  /**
+   * Gets instance.
+   *
+   * @return the instance
+   */
   public static DsManager getInstance() {
     if (instance == null) {
       instance = new DsManager();
@@ -59,5 +64,15 @@ public class DsManager {
    */
   public ArrayList<DsDevice> getConnectedDevices() {
     return connectedDevices;
+  }
+
+  /**
+   * Gets connected device by mac.
+   *
+   * @param macAddress the mac address
+   * @return the connected device by mac
+   */
+  public DsDevice getConnectedByMac(String macAddress) {
+    return getConnectedDevices().stream().filter(d -> d.getMac().equalsIgnoreCase(macAddress)).findFirst().orElse(null);
   }
 }

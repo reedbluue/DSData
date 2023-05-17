@@ -7,6 +7,8 @@ import org.hid4java.HidServicesListener;
 import org.hid4java.event.HidServicesEvent;
 
 import java.util.List;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 
 /**
  * The type Ds service.
