@@ -30,7 +30,8 @@ public class InputReport extends Report {
    * @return the left stick x-axis (-255 - 255)
    */
   public int getLeftStickX() {
-    return (int) ScaleHelper.scale(Byte.toUnsignedInt(this.getData()[2]), 0, 255, -255, 255);
+    if (this.getProtocol() != (byte) 0x11) return 0;
+    return (int) ScaleHelper.scale(Byte.toUnsignedInt(this.getData()[2]), 0, 255, -100, 100);
   }
 
   /**
@@ -39,7 +40,8 @@ public class InputReport extends Report {
    * @return the left stick y-axis (-255 - 255)
    */
   public int getLeftStickY() {
-    return (int) ScaleHelper.scale(Byte.toUnsignedInt(this.getData()[3]), 0, 255, -255, 255) * -1;
+    if (this.getProtocol() != (byte) 0x11) return 0;
+    return (int) ScaleHelper.scale(Byte.toUnsignedInt(this.getData()[3]), 0, 255, -100, 100) * -1;
   }
 
   /**
@@ -48,7 +50,8 @@ public class InputReport extends Report {
    * @return the right stick x-axis (-255 - 255)
    */
   public int getRightStickX() {
-    return (int) ScaleHelper.scale(Byte.toUnsignedInt(this.getData()[4]), 0, 255, -255, 255);
+    if (this.getProtocol() != (byte) 0x11) return 0;
+    return (int) ScaleHelper.scale(Byte.toUnsignedInt(this.getData()[4]), 0, 255, -100, 100);
   }
 
   /**
@@ -57,7 +60,8 @@ public class InputReport extends Report {
    * @return the right stick y-axis (-255 - 255)
    */
   public int getRightStickY() {
-    return (int) ScaleHelper.scale(Byte.toUnsignedInt(this.getData()[5]), 0, 255, -255, 255) * -1;
+    if (this.getProtocol() != (byte) 0x11) return 0;
+    return (int) ScaleHelper.scale(Byte.toUnsignedInt(this.getData()[5]), 0, 255, -100, 100) * -1;
   }
 
   /**
@@ -283,6 +287,6 @@ public class InputReport extends Report {
    */
   public int getBattery() {
     if (this.getData()[13] == 0) return 0;
-    return (int) ScaleHelper.scale(Math.abs(255 - Byte.toUnsignedInt(this.getData()[13])), 0, 255, 0, 100);
+    return (int) ScaleHelper.scale(Byte.toUnsignedInt(this.getData()[13]), 0, 18, 0, 100);
   }
 }

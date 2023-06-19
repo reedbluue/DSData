@@ -3,6 +3,8 @@ import dev.ioliver.models.Report.InputReport;
 import dev.ioliver.models.Report.OutputReportFCR;
 import dev.ioliver.services.DsManager;
 
+import java.util.Arrays;
+
 public class DsManagerTest {
   public static void main(String[] args) throws InterruptedException {
 
@@ -23,8 +25,9 @@ public class DsManagerTest {
         } else {
           outputReport.setReset(); // se não, envia os valores padrões da biblioteca para o controle
         }
+        System.out.println(inputReport.getBattery());
       }
-      Thread.sleep(5);
+      Thread.sleep(1000);
     }
   }
 }
